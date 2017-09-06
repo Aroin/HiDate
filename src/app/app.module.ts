@@ -1,18 +1,17 @@
-import { HiDatePickerComponent } from './datepicker/Hi-datepicker';
+import { HiDateModule } from './datepicker/Hi-Date.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
-
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HiDatePickerComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HiDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

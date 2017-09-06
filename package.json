@@ -5,13 +5,54 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:cli": "ng build --aot",
+    "build:aro": "nglb --rootDir src/app/datepicker --outDir dist",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "clean": "rimraf node_modules dist dist-lib",
+    "clean:install": "npm run clean && npm install",
+    "prepublish": "npm run build:aro"
   },
   "author": "Hamid Taheri <h4mid.taheri@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aroin/HiDate.git"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular4",
+    "ng2",
+    "ng4",
+    "ngx",
+    "datepicker",
+    "date",
+    "component",
+    "persian",
+    "jalaali",
+    "moment"
+  ],
+  "bugs": {
+    "url": "https://github.com/Aroin/HiDate/issues"
+  },
+  "homepage": "https://github.com/Aroin/HiDate#readme",
+  "main": "./dist/Hi-Date.module.js",
+  "module": "./dist/Hi-Date.module.js",
+  "types": "./dist/Hi-Date.module.d.ts",
+  "peerDependencies": {
+    "@angular/common": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
+    "@angular/core": ">=2.0.0 <5.0.0 || >=4.0.0-beta <5.0.0",
+    "@angular/forms": "^2.4.0",
+    "rxjs": ">=5.0.0 || >=5.0.0-beta",
+    "zone.js": ">=0.7.0"
+  },
   "dependencies": {
+    "moment": "^2.17.1",
+    "moment-jalaali": "^0.7.2",
+    "@types/moment-jalaali": "^0.7.1"
+  },
+  "devDependencies": {
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -25,9 +66,7 @@
     "moment": "^2.18.1",
     "moment-jalaali": "^0.7.2",
     "rxjs": "^5.4.1",
-    "zone.js": "^0.8.14"
-  },
-  "devDependencies": {
+    "zone.js": "^0.8.14",
     "@angular/cli": "1.2.7",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/language-service": "^4.0.0",
