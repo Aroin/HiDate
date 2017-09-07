@@ -49,18 +49,18 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   //====================Output==================
   @Output() changeDate = new EventEmitter();
   //============================================
-  private _date: any = moment();
-  private _selectedDate: any = moment();
-  private el: Element;
-  private timeData = {hour: 10, minute: 20};
-  private days: HiDatePicker[] = [];
-  private _formatHeaderCalendar: string;
-  private type: CalendarType;
-  private isRTL: string;
-  private isYearEdit: boolean = false;
-  private AMOrPM: string = "am";
-  private _minDate: HiDate;
-  private _maxDate: HiDate;
+  public _date: any = moment();
+  public _selectedDate: any = moment();
+  public el: Element;
+  public timeData = {hour: 10, minute: 20};
+  public days: HiDatePicker[] = [];
+  public _formatHeaderCalendar: string;
+  public type: CalendarType;
+  public isRTL: string;
+  public isYearEdit: boolean = false;
+  public AMOrPM: string = "am";
+  public _minDate: HiDate;
+  public _maxDate: HiDate;
   public tranlsate = {
     en: {
         mon: "Mon",
