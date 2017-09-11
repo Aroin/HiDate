@@ -1,4 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+    font-family: Vazir;
+    src: url('../node_modules/vazir-font/dist/Vazir.eot');
+    src: url('../node_modules/vazir-font/dist/Vazir.eot?#iefix') format('embedded-opentype'),
+         url('../node_modules/vazir-font/dist/Vazir.woff') format('woff'),
+         url('../node_modules/vazir-font/dist/Vazir.ttf') format('truetype');
+    font-weight: normal;
+  }
+        
+  @font-face {
+    font-family: Vazir;
+    src: url('../node_modules/vazir-font/dist/Vazir-Bold.eot');
+    src: url('../node_modules/vazir-font/dist/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+         url('../node_modules/vazir-font/dist/Vazir-Bold.woff') format('woff'),
+         url('../node_modules/vazir-font/dist/Vazir-Bold.ttf') format('truetype');
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: Vazir;
+    src: url('../node_modules/vazir-font/dist/Vazir-Light.eot');
+    src: url('../node_modules/vazir-font/dist/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+         url('../node_modules/vazir-font/dist/Vazir-Light.woff') format('woff'),
+         url('../node_modules/vazir-font/dist/Vazir-Light.ttf') format('truetype');
+    font-weight: 300;
+ }
+
 body {
+    font-family: Vazir;
     direction: rtl;
 }
