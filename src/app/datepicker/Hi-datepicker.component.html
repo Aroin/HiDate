@@ -20,24 +20,24 @@
       <div class="hpicker-rContainer">
         <div class="hpicker-weekdays " *ngIf="firstWeekdaySaturday">
 
-          <span class="hpicker-weekday{{isRTL}}">{{ 'sat' }}</span>
-          <span class="hpicker-weekday{{isRTL}}">{{ 'sun' }}</span>
-          <span class="hpicker-weekday{{isRTL}}">{{ 'mon' }}</span>
-          <span class="hpicker-weekday{{isRTL}}">{{ 'tue' }}</span>
-          <span class="hpicker-weekday{{isRTL}}">{{ 'wed' }}</span>
-          <span class="hpicker-weekday{{isRTL}}">{{ 'thu' }}</span>
-          <span class="hpicker-weekday{{isRTL}}" style="color: #ff0000;">{{ 'fri' }}</span>
+          <span class="hpicker-weekday{{isRTL}}">{{ i18n.sat }}</span>
+          <span class="hpicker-weekday{{isRTL}}">{{ i18n.sun }}</span>
+          <span class="hpicker-weekday{{isRTL}}">{{ i18n.mon }}</span>
+          <span class="hpicker-weekday{{isRTL}}">{{ i18n.tue }}</span>
+          <span class="hpicker-weekday{{isRTL}}">{{ i18n.wed }}</span>
+          <span class="hpicker-weekday{{isRTL}}">{{ i18n.thu }}</span>
+          <span class="hpicker-weekday{{isRTL}}" style="color: #ff0000;">{{ i18n.fri }}</span>
         </div>
 
         <div class="hpicker-weekdays {{isRTL}}" *ngIf="!firstWeekdaySaturday">
 
-          <span class="hpicker-weekday" style="color: #ff0000;">{{ 'sun' }}</span>
-          <span class="hpicker-weekday">{{ 'mon' }}</span>
-          <span class="hpicker-weekday">{{ 'thu' }}</span>
-          <span class="hpicker-weekday">{{ 'wed' }}</span>
-          <span class="hpicker-weekday">{{ 'tue' }}</span>
-          <span class="hpicker-weekday">{{ 'fri' }}</span>
-          <span class="hpicker-weekday">{{ 'sat' }}</span>
+          <span class="hpicker-weekday" style="color: #ff0000;">{{ i18n.sun }}</span>
+          <span class="hpicker-weekday">{{ i18n.mon }}</span>
+          <span class="hpicker-weekday">{{ i18n.tue }}</span>
+          <span class="hpicker-weekday">{{ i18n.wed }}</span>
+          <span class="hpicker-weekday">{{ i18n.thu }}</span>
+          <span class="hpicker-weekday">{{ i18n.fri }}</span>
+          <span class="hpicker-weekday">{{ i18n.sat }}</span>
 
         </div>
         <div class="hpicker-days {{isRTL}}">
@@ -66,8 +66,7 @@
       </div>
       <span class="arrowUp"></span>
       <span class="arrowDown"></span>
-      <span class="hpicker-am-pm" (mouseup)="AMPM()" tabindex="0">{{ 'm_date_picker.'+AMOrPM  }}</span>
-      <!--<ngb-timepicker [(ngModel)]="timeData" [meridian]="meridian"></ngb-timepicker>-->
+      <span class="hpicker-am-pm" (mouseup)="AMPM()" tabindex="0">{{ i18n[AMOrPM]  }}</span>
     </div>
   </div>
 </div>

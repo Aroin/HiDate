@@ -1,6 +1,6 @@
 import { i18n } from './i18n';
-import {Component, ViewContainerRef, OnInit, Input, Output, EventEmitter, forwardRef} from "@angular/core";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { Component, ViewContainerRef, OnInit, Input, Output, EventEmitter, forwardRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import * as moment from 'moment-jalaali';
 
 enum CalendarType {
@@ -36,7 +36,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() alwaysOpened: boolean;
   @Input() hiddenButton: boolean;
   @Input()
-  set minDate(date: HiDate){
+  set minDate(date: HiDate) {
     this._minDate = date;
     this.generateCalendar();
   }
@@ -52,7 +52,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   public _date: any = moment();
   public _selectedDate: any = moment();
   public el: Element;
-  public timeData = {hour: 10, minute: 20};
+  public timeData = { hour: 10, minute: 20 };
   public days: HiDatePicker[] = [];
   public _formatHeaderCalendar: string;
   public type: CalendarType;
@@ -61,44 +61,47 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   public AMOrPM: string = "am";
   public _minDate: HiDate;
   public _maxDate: HiDate;
-  public tranlsate = {
+  public i18n: any;
+  private i18nObj = {
     en: {
-        mon: "Mon",
-        tue: "Tue",
-        wed: "Wed",
-        thu: "Thu",
-        fri: "Fri",
-        sat: "Sat",
-        sun: "Sun",
-        am: "AM",
-        pm: "PM"
+      mon: "Mon",
+      tue: "Tue",
+      wed: "Wed",
+      thu: "Thu",
+      fri: "Fri",
+      sat: "Sat",
+      sun: "Sun",
+      am: "AM",
+      pm: "PM"
     },
     fa: {
-        mon: "دوشنبه",
-        tue: "سه شنبه",
-        wed: "چهارشنبه",
-        thu: "پنج شنبه",
-        fri: "جمعه",
-        sat: "شنبه",
-        sun: "یک شنبه",
-        am: "ق.ظ",
-        pm: "ب.ظ"
+      mon: "دوشنبه",
+      tue: "سه شنبه",
+      wed: "چهارشنبه",
+      thu: "پنج شنبه",
+      fri: "جمعه",
+      sat: "شنبه",
+      sun: "یک شنبه",
+      am: "ق.ظ",
+      pm: "ب.ظ"
     }
-};
+  };
 
   constructor(viewContainerRef: ViewContainerRef) {
     this.el = viewContainerRef.element.nativeElement;
   }
 
   ngOnInit() {
-    this.timeData = this.initTime || {hour: 10, minute: 20};
-    this._maxDate = this._maxDate || {day: 0, month: 0, year: 0};
-    this._minDate = this._minDate || {day: 0, month: 0, year: 0};
+    this.timeData = this.initTime || { hour: 10, minute: 20 };
+    this._maxDate = this._maxDate || { day: 0, month: 0, year: 0 };
+    this._minDate = this._minDate || { day: 0, month: 0, year: 0 };
+    this.i18n = this.i18nObj.en;
     this.persianCalendar = this.persianCalendar || false;
     this.time = this.time || false;
     this.alwaysOpened = this.alwaysOpened || false;
     if (this.alwaysOpened) this.opened = true;
     if (this.persianCalendar) {
+      this.i18n = this.i18nObj.fa;
       this.type = CalendarType.Solar;
       this.firstWeekdaySaturday = this.firstWeekdaySaturday || true;
     }
@@ -108,7 +111,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
     }
     switch (this.type) {
       case CalendarType.Solar:
-        moment.loadPersian();
+        moment.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
         this._formatHeaderCalendar = 'jMMMM';
         this.format = this.format || 'x';
         this.viewFormat = this.viewFormat || ((this.time) ? 'jD jMMMM jYYYY h:m a' : 'jD jMMMM jYYYY');
@@ -229,12 +232,31 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   changeTime(): void {
-    let currentDay = this.days.filter(day => {
+    let currentDay : any = this.days.filter(day => {
       if (day.selected == true) return true;
     })[0];
     if (currentDay == undefined) currentDay = this.days.filter(day => {
       if (day.today == true) return true;
     })[0];
+    if (currentDay == undefined) {
+      switch (this.type) {
+        case CalendarType.Solar:
+          currentDay = {
+            day: this.selectedDate.jDate(),
+            month: this.selectedDate.jMonth(),
+            year: this.selectedDate.jYear()
+          };
+          break;
+        case CalendarType.Gregorian:
+          currentDay = {
+            day: this.selectedDate.date(),
+            month: this.selectedDate.month(),
+            year: this.selectedDate.year()
+        };
+          break;
+      }
+
+    }
     let selectedDate = moment();
     switch (this.type) {
       case CalendarType.Solar:
@@ -273,7 +295,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
     } else {
       n = (((firstWeekDay + 6) % 6) - 2) * -1;
     }
-    let dd = (lastDayMonth + (Math.abs(n) + 1)) % 7 ;
+    let dd = (lastDayMonth + (Math.abs(n) + 1)) % 7;
     let dayInit = dd > 0 ? lastDayMonth + (7 - dd) : lastDayMonth;
 
 
@@ -281,7 +303,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
     for (let i = n; i <= dayInit; i += 1) {
       let currentDate = moment(`${i}.${month + 1}.${year}`, 'jDD.jMM.jYYYY');
       let today = (moment().isSame(currentDate, 'day') && moment().isSame(currentDate, 'month')) ? true : false;
-      let selected : boolean = (this.selectedDate && this.selectedDate.isSame(currentDate,'day')) ? true : false;
+      let selected: boolean = (this.selectedDate && this.selectedDate.isSame(currentDate, 'day')) ? true : false;
 
       if (i > 0 && i <= lastDayMonth) {
         this.days.push(this.checkValidDate({
