@@ -98,6 +98,10 @@ Example :
 
 Boolean that sets format view on datepicker [time format standard].(defaults to false)
 
+**`offAMOrPM`** - [**`?boolean`**] 
+
+Boolean that sets turn off AM or PM mode when time property active.(defaults to false)
+
 **`minDate`** - [**`?HiDate`**] 
 
 HiDate that sets minimum select date.(defaults to null)

@@ -68,7 +68,8 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
       sat: "Sat",
       sun: "Sun",
       am: "AM",
-      pm: "PM"
+      pm: "PM",
+      today: "today"
     },
     fa: {
       mon: "دوشنبه",
@@ -79,7 +80,8 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
       sat: "شنبه",
       sun: "یک شنبه",
       am: "ق.ظ",
-      pm: "ب.ظ"
+      pm: "ب.ظ",
+      today: "امروز"
     }
   };
 
@@ -528,6 +530,14 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
       this.timeData.hour = this.timeData.hour - 12;
     }
     this.changeTime();
+  }
+
+  aro() : void {
+    this.selectedDate = moment();
+    this.value = this.selectedDate;
+    this.changeDate.emit(this.value);
+    this.close();
+    this.generateCalendar();
   }
 }
 

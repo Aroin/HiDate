@@ -809,3 +809,18 @@ span.hpicker-weekday.rtl {
   position: absolute;
   /*right: 235px;*/
 }
+
+.aro-btn {
+  border: 1px solid #aec9de;
+  border-radius: 10px;
+  height: 30px;
+  background: #fcfcff;
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+}
+
+.aro-btn:hover {
+  background: #505b71;
+  color: #e6e6e6;
+}
