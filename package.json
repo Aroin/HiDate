@@ -6,11 +6,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build:cli": "ng build --aot",
-    "build:aro": "nglb --rootDir src/app/datepicker --outDir dist",
+    "build:aro": "nglb --rootDir src/app/datepicker --outDir build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "clean": "rimraf node_modules dist dist-lib",
+    "clean": "rimraf node_modules dist build",
     "clean:install": "npm run clean && npm install",
     "prepublish": "npm run build:aro"
   },
