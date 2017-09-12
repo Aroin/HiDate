@@ -1,4 +1,3 @@
-import { i18n } from './i18n';
 import { Component, ViewContainerRef, OnInit, Input, Output, EventEmitter, forwardRef } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import * as moment from 'moment-jalaali';
