@@ -3,7 +3,7 @@ import { Component, ViewContainerRef, OnInit, Input, Output, EventEmitter, forwa
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import * as moment from 'moment-jalaali';
 
-enum CalendarType {
+export declare enum CalendarType {
   Solar,
   Gregorian
 }
