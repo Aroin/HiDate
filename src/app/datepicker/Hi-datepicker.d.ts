@@ -17,6 +17,7 @@ export declare class HiDatePickerComponent implements ControlValueAccessor, OnIn
     maxDate: HiDate;
     minDate: HiDate;
     initTime: any;
+    offAMOrPM: boolean;
 
     private _date;
     private _selectedDate;
