@@ -9,5 +9,12 @@
 <hi-datepicker [(ngModel)]="date" [expanded]="true" [persianCalendar]="true"></hi-datepicker>
 
 <hr/>
-<hi-datepicker [expanded]="true" [persianCalendar]="true" [time]="true" [class]="'success'"></hi-datepicker>
+<div class="row">
+  <div class="col-6">
+    <hi-datepicker [expanded]="true" [persianCalendar]="true" [time]="true" [class]="'success'"></hi-datepicker>
+  </div>
+  <div class="col-6">
+    <hi-datepicker [expanded]="true" [persianCalendar]="true" [time]="true" [class]="'warning'" [offAMOrPM]="true"></hi-datepicker>
+  </div>
+</div>
 <br/>

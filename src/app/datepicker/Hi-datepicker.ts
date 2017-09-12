@@ -3,11 +3,6 @@ import { Component, ViewContainerRef, OnInit, Input, Output, EventEmitter, forwa
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import * as moment from 'moment-jalaali';
 
-export declare enum CalendarType {
-  Solar,
-  Gregorian
-}
-
 export const CALENDAR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => HiDatePickerComponent),
@@ -35,6 +30,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   @Input() time: boolean;
   @Input() alwaysOpened: boolean;
   @Input() hiddenButton: boolean;
+  @Input() offAMOrPM: boolean;
   @Input()
   set minDate(date: HiDate) {
     this._minDate = date;
@@ -55,7 +51,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   public timeData = { hour: 10, minute: 20 };
   public days: HiDatePicker[] = [];
   public _formatHeaderCalendar: string;
-  public type: CalendarType;
+  public type: string = "Gregorian";
   public isRTL: string;
   public isYearEdit: boolean = false;
   public AMOrPM: string = "am";
@@ -92,25 +88,28 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
-    this.timeData = this.initTime || { hour: 10, minute: 20 };
+    this.selectedDate = moment();
+    let currentTime = { hour : this.selectedDate.hour(), minute: this.selectedDate.minute()};
+    this.timeData = this.initTime || currentTime;
     this._maxDate = this._maxDate || { day: 0, month: 0, year: 0 };
     this._minDate = this._minDate || { day: 0, month: 0, year: 0 };
     this.i18n = this.i18nObj.en;
     this.persianCalendar = this.persianCalendar || false;
     this.time = this.time || false;
     this.alwaysOpened = this.alwaysOpened || false;
+    this.offAMOrPM = this.offAMOrPM || false;
     if (this.alwaysOpened) this.opened = true;
     if (this.persianCalendar) {
       this.i18n = this.i18nObj.fa;
-      this.type = CalendarType.Solar;
+      this.type = "Solar";
       this.firstWeekdaySaturday = this.firstWeekdaySaturday || true;
     }
     else {
-      this.type = CalendarType.Gregorian;
+      this.type = "Gregorian";
       this.firstWeekdaySaturday = this.firstWeekdaySaturday || false;
     }
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         moment.loadPersian({ dialect: 'persian-modern', usePersianDigits: true });
         this._formatHeaderCalendar = 'jMMMM';
         this.format = this.format || 'x';
@@ -162,7 +161,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
 
   get year() {
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         return this.value.jYear();
       default:
         return this.value.year();
@@ -171,7 +170,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
 
   set year(year: number) {
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         if (this.value.jYear() > year)
           this.subtract(this.value.jYear() - year, 'jYear');
         else if (this.value.jYear() < year) {
@@ -200,22 +199,40 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   get hour() {
-    if (this.timeData.hour < 13) {
-      this.AMOrPM = 'am';
+    if (!this.offAMOrPM) {
+
+      if (this.timeData.hour < 13) {
+        this.AMOrPM = 'am';
+        return this.timeData.hour;
+      }
+      else {
+        this.AMOrPM = 'pm';
+        return this.timeData.hour - 12;
+      }
+    } else {
+      if (this.timeData.hour >= 0 && this.timeData.hour < 12)
+        this.AMOrPM = 'am';
+      else
+        this.AMOrPM = 'pm';
       return this.timeData.hour;
-    }
-    else {
-      this.AMOrPM = 'pm';
-      return this.timeData.hour - 12;
     }
   }
 
   set hour(hour: number) {
-    if (hour >= 0 && hour < 12) {
-      if (this.AMOrPM == 'am')
-        this.timeData.hour = hour;
+    if (!this.offAMOrPM) {
+      if (hour >= 0 && hour < 12) {
+        if (this.AMOrPM == 'am')
+          this.timeData.hour = hour;
+        else
+          this.timeData.hour = hour + 12;
+        this.changeTime();
+      }
+    } else {
+      if (hour >= 0 && hour < 12)
+        this.AMOrPM = 'am';
       else
-        this.timeData.hour = hour + 12;
+        this.AMOrPM = 'pm';
+      this.timeData.hour = hour;
       this.changeTime();
     }
   }
@@ -232,7 +249,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   changeTime(): void {
-    let currentDay : any = this.days.filter(day => {
+    let currentDay: any = this.days.filter(day => {
       if (day.selected == true) return true;
     })[0];
     if (currentDay == undefined) currentDay = this.days.filter(day => {
@@ -240,29 +257,29 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
     })[0];
     if (currentDay == undefined) {
       switch (this.type) {
-        case CalendarType.Solar:
+        case "Solar":
           currentDay = {
             day: this.selectedDate.jDate(),
             month: this.selectedDate.jMonth(),
             year: this.selectedDate.jYear()
           };
           break;
-        case CalendarType.Gregorian:
+        case "Gregorian":
           currentDay = {
             day: this.selectedDate.date(),
             month: this.selectedDate.month(),
             year: this.selectedDate.year()
-        };
+          };
           break;
       }
 
     }
     let selectedDate = moment();
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         selectedDate = moment(`${currentDay.day}.${currentDay.month}.${currentDay.year} ${this.timeData.hour}:${this.timeData.minute}`, 'jDD.jMM.jYYYY HH:mm');
         break;
-      case CalendarType.Gregorian:
+      case "Gregorian":
         selectedDate = moment(`${currentDay.day}.${currentDay.month}.${currentDay.year} ${this.timeData.hour}:${this.timeData.minute}`, 'DD.MM.YYYY HH:mm');
         break;
     }
@@ -271,10 +288,10 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
 
   generateCalendar() {
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         this.jalaliGenerateCalendar();
         break;
-      case CalendarType.Gregorian:
+      case "Gregorian":
         this.miladiGenerateCalendar();
         break;
       default:
@@ -418,13 +435,13 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
       let date: HiDatePicker = this.days[i];
       let selectedDate = moment();
       switch (this.type) {
-        case CalendarType.Solar:
+        case "Solar":
           if (this.time)
             selectedDate = moment(`${date.day}.${date.month}.${date.year} ${this.timeData.hour}:${this.timeData.minute}`, 'jDD.jMM.jYYYY HH:mm');
           else
             selectedDate = moment(`${date.day}.${date.month}.${date.year}`, 'jDD.jMM.jYYYY');
           break;
-        case CalendarType.Gregorian:
+        case "Gregorian":
           if (this.time)
             selectedDate = moment(`${date.day}.${date.month}.${date.year} ${this.timeData.hour}:${this.timeData.minute}`, 'DD.MM.YYYY HH:mm');
           else
@@ -440,7 +457,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
 
   prevMonth() {
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         this.value = this.value.add(1, 'jMonth');
         this.generateCalendar();
         break;
@@ -453,7 +470,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
 
   nextMonth() {
     switch (this.type) {
-      case CalendarType.Solar:
+      case "Solar":
         this.value = this.value.subtract(1, 'jMonth');
         this.generateCalendar();
         break;

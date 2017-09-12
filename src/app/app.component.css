@@ -1,0 +1,16 @@
+.col-6 {
+    width:40%;
+    float: right;
+    position:relative;
+    min-height:1px;
+    padding-right:15px;
+    padding-left:15px;
+}
+
+.row {
+    margin-right:-15px;margin-left:-15px
+}
+
+.row:after,.row:before{display:table;content:" "}
+
+.row:after{clear:both}

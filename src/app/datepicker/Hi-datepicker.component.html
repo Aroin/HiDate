@@ -56,7 +56,8 @@
     </div>
     <div class="hpicker-time" *ngIf="time" >
       <div class="numInputWrapper">
-        <input  class="numInput hpicker-hour" [(ngModel)]="hour" type="number" pattern="\d*" tabindex="0" step="1" min="0" max="11" >
+        <input *ngIf="!offAMOrPM"  class="numInput hpicker-hour" [(ngModel)]="hour" type="number" pattern="\d*" tabindex="0" step="1" min="0" max="11" >
+        <input *ngIf="offAMOrPM"  class="numInput hpicker-hour" [(ngModel)]="hour" type="number" pattern="\d*" tabindex="0" step="1" min="0" max="23" >
       </div>
       <span class="arrowUp"></span>
       <span class="arrowDown"></span>
@@ -66,7 +67,7 @@
       </div>
       <span class="arrowUp"></span>
       <span class="arrowDown"></span>
-      <span class="hpicker-am-pm" (mouseup)="AMPM()" tabindex="0">{{ i18n[AMOrPM]  }}</span>
+      <span *ngIf="!offAMOrPM" class="hpicker-am-pm" (mouseup)="AMPM()" tabindex="0">{{ i18n[AMOrPM]  }}</span>
     </div>
   </div>
 </div>
