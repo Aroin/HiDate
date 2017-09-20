@@ -130,6 +130,7 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
     this.selectedDate = moment();
     this.value = moment()
     this.generateCalendar();
+    this.changeTime();
 
     // closed date-picker click page
     let body = document.querySelector('body');
