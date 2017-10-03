@@ -487,6 +487,9 @@ export class HiDatePickerComponent implements ControlValueAccessor, OnInit {
     if (value != null || value != undefined || (this.format == "x" || this.format == "X") ? moment(parseInt(value)).isValid() : moment(value, this.format).isValid()) {
       this.selectedDate = (this.format == "x" || this.format == "X") ? moment(parseInt(value)) : moment(value, this.format);
       this.value = (this.format == "x" || this.format == "X") ? moment(parseInt(value)) : moment(value, this.format);
+      this.timeData.hour = this.selectedDate.hour();
+      this.timeData.minute = this.selectedDate.minute();
+      this.generateCalendar();
     } else if (value == null || value == undefined) {
       this.selectedDate = moment();
       this.value = moment();
